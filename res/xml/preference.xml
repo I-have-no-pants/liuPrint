@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <EditTextPreference android:defaultValue="astmatix.ida.liu.se" android:title="Server" android:summary="Server to connect to" android:key="server"/><EditTextPreference android:title="Username" android:key="user" android:summary="Username on the server."/>
+    
+
+</PreferenceScreen>
