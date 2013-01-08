@@ -1,0 +1,9 @@
+#!/bin/bash
+/sw/gnu/bin/wget $1 -O out -o log
+if [ -f out ]
+then
+     echo 'Printing...'
+     lp out
+else
+     echo 'URL not found!'
+fi
