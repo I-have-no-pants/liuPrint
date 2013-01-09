@@ -3,7 +3,7 @@
 if [ -f out ]
 then
      echo 'Printing...'
-     lp out
+     lp out -n $2
 else
      echo 'URL not found!'
 fi
