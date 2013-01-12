@@ -11,6 +11,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -64,6 +66,25 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
+	
+	/**
+	 * User clicks print button
+	 * 
+	 * @param view
+	 */
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.menu_settings:
+	    		// Show settings
+	    		Intent settingsActivity = new Intent(getBaseContext(),
+	    				SettingsActivity.class);
+	    		startActivity(settingsActivity);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
 
 	/**
 	 * Reads user data from config
@@ -73,6 +94,7 @@ public class MainActivity extends Activity {
 				.getDefaultSharedPreferences(this);
 		user = sharedPref.getString("user", "");
 		host = sharedPref.getString("server", "");
+		port = Integer.parseInt(sharedPref.getString("port", "22"));
 	}
 
 	@Override
@@ -97,13 +119,17 @@ public class MainActivity extends Activity {
 		} else {
 			// Started via other (main menu)
 
-			// Show settings
-			Intent settingsActivity = new Intent(getBaseContext(),
-					SettingsActivity.class);
-			startActivity(settingsActivity);
 		}
 
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
+
 
 	/**
 	 * Set URL to send to printserver
