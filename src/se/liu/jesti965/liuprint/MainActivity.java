@@ -1,5 +1,6 @@
 package se.liu.jesti965.liuprint;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Properties;
 
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
@@ -34,7 +36,7 @@ public class MainActivity extends Activity {
 	 * @return
 	 */
 	private String generateCommand() {
-		return new String("./printScript \"" + url + "\" " + getPrintCount());
+		return new String("./printScript \"" + url + "\" " + getPrintCount() + "\n");
 	}
 	
 	/**
@@ -227,23 +229,26 @@ public class MainActivity extends Activity {
 		session.connect();
 
 		// SSH Channel
-		ChannelExec channelssh = (ChannelExec) session.openChannel("exec");
+		ChannelShell channelssh = (ChannelShell) session.openChannel("shell");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ByteArrayInputStream in = new ByteArrayInputStream(command.getBytes());
+
 		channelssh.setOutputStream(baos);
 
+		channelssh.setInputStream(in);
+
+
 		// Execute command
-		channelssh.setCommand(command);
 		channelssh.connect();
 
+		while (baos.size()<100) {
+			
+		}
+		
+		String s = new String(baos.toByteArray());
+		setStatus(baos.toString());
 		channelssh.disconnect();
 
-		String s;
-		if (baos.toString().compareTo(new String("")) == 0) {
-			s = new String("Printed.");
-		} else {
-			s = baos.toString();
-		}
-		setStatus(s);
 		return s;
 	}
 
