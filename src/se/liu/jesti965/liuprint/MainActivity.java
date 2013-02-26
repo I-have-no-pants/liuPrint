@@ -240,15 +240,17 @@ public class MainActivity extends Activity {
 
 		// Execute command
 		channelssh.connect();
+		
 
-		while (baos.size()<100) {
+		while (!baos.toString().contains("Printing Done")) {
 			
 		}
-		
-		String s = new String(baos.toByteArray());
-		setStatus(baos.toString());
 		channelssh.disconnect();
 
+
+		String s = new String(baos.toByteArray());
+		setStatus(baos.toString());
+		
 		return s;
 	}
 
